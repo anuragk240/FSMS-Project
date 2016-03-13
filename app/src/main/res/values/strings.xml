@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Financial Statement</string>
+    <string name="action_settings">Settings</string>
+    <string name="password_error">*Password should be atleast of 8 characters.No whitespaces.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
