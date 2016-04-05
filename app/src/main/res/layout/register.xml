@@ -67,6 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_marginTop="5dp"
                 android:textStyle="bold"
+                android:inputType="textEmailAddress"
                 android:textColor="@color/textcolorregister"
                 android:singleLine="true"
                 android:id="@+id/emailid"
@@ -99,6 +100,15 @@
                 android:inputType="textPassword"
                 android:id="@+id/confirmpasswrdid"
                 android:hint="Confirm Password"
+                android:textColorHint="@color/textcolorregister"/>
+            <EditText
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                android:inputType="text"
+                android:id="@+id/companynameid"
+                android:hint="Name (For display on statement)"
                 android:textColorHint="@color/textcolorregister"/>
             <Button
                 android:layout_height="wrap_content"

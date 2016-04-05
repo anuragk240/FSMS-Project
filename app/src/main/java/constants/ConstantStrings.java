@@ -10,4 +10,5 @@ public class ConstantStrings {
     public final static String EMAIL_ID = "email_id";
     public final static String PASSWORD = "password";
     public final static String USERNAME = "username";
+    public final static String COMPANY_NAME = "Company Name";
 }

@@ -8,5 +8,5 @@
     <color name="text_backgroound">#5d7e7e7e</color>
     <color name="textcolorlogin">#000000</color>
     <color name="textcolorregister">#ffffff</color>
-    <color name="red">#ff0004</color>
+    <color name="fragments_background">#ca53ffc6</color>
 </resources>

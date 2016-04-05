@@ -19,15 +19,10 @@ import fsms.my1stproject.com.financialstatement.R;
 
 public class RegistrationFragment extends Fragment implements View.OnClickListener {
 
-    private EditText firstname;
-    private EditText lastname;
-    private EditText emailid;
-    private EditText username;
-    private EditText password;
-    private EditText confirmpassword;
-    private TextView passworderror;
+    private EditText firstname, lastname, emailid, username, password, confirmpassword, companyname;
+    private TextView passworderror, gotologin;
     private Button registerButton;
-    private TextView gotologin;
+    public static String companyname1;
 
     private HashMap<String, String> data = new HashMap<>();
 
@@ -46,6 +41,8 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
                     data.put(ConstantStrings.LASTNAME, lastname.getText().toString());
                     data.put(ConstantStrings.EMAIL_ID, emailid.getText().toString());
                     data.put(ConstantStrings.USERNAME, username.getText().toString());
+                    data.put(ConstantStrings.COMPANY_NAME, companyname.getText().toString());
+                    companyname1 = companyname.getText().toString();
                     Log.d("Regfragment usernme", data.get(ConstantStrings.USERNAME));
                     data.put(ConstantStrings.PASSWORD, password.getText().toString());
                     mcallback.getdata(data);
@@ -55,7 +52,7 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
                 v.setVisibility(View.INVISIBLE);
                 break;
             case R.id.gotologinid:
-
+                //Not set
                 break;
         }
     }
@@ -95,11 +92,11 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
         registerButton = (Button) v.findViewById(R.id.registerbuttonid);
         passworderror = (TextView) v.findViewById(R.id.passworderror);
         gotologin = (TextView) v.findViewById(R.id.gotologinid);
+        companyname = (EditText) v.findViewById(R.id.companynameid);
 
         registerButton.setOnClickListener(this);
         passworderror.setOnClickListener(this);
         gotologin.setOnClickListener(this);
-
 
         return v;
     }
@@ -125,6 +122,10 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
         }
         if(!s.equals(confirmpassword.getText().toString())){
             Toast.makeText(getContext(),"*Passwords did not match",Toast.LENGTH_LONG).show();
+            result = false;
+        }
+        if(companyname.getText().toString().isEmpty()){
+            companyname.setHint("*Required Field");
             result = false;
         }
         return result;

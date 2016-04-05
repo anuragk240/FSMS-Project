@@ -2,13 +2,17 @@ package fsms.my1stproject.com.financialstatement;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -42,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements RegistrationFragm
         Logininfo = getPreferences(Context.MODE_PRIVATE);
         editor = Logininfo.edit();
 
+        fragmentContainer = (RelativeLayout) findViewById(R.id.fragment_container);
+
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
         //load suitable fragment based on registration status
@@ -61,13 +67,13 @@ public class MainActivity extends AppCompatActivity implements RegistrationFragm
                 Log.d("Registered ", "LoginFragment added");
             }
         }
+        fragmentContainer.setVisibility(View.VISIBLE);
         fragmentTransaction.commit();
-
-        fragmentContainer = (RelativeLayout) findViewById(R.id.fragment_container);
 
     }
 
-
+    //---------to handle login and registration--------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------------------------------
 
     @Override
     public void getdata(HashMap<String, String> data) {
@@ -83,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements RegistrationFragm
         editor.putString(ConstantStrings.EMAIL_ID, data.get(ConstantStrings.EMAIL_ID));
         editor.putString(ConstantStrings.USERNAME, data.get(ConstantStrings.USERNAME));
         editor.putString(ConstantStrings.PASSWORD, data.get(ConstantStrings.PASSWORD));
+        editor.putString(ConstantStrings.COMPANY_NAME, data.get(ConstantStrings.COMPANY_NAME));
         editor.putBoolean(ConstantStrings.IS_REGISTERED, true);
         editor.commit();
         Log.d("After Reg,username ", data.get(ConstantStrings.USERNAME).toString());
@@ -107,7 +114,8 @@ public class MainActivity extends AppCompatActivity implements RegistrationFragm
                 fragmentTransaction.remove(login);
                 fragmentTransaction.commit();
                 fragmentContainer.setVisibility(View.GONE);
-
+                Intent gototabs = new Intent(MainActivity.this, TabActivity.class);
+                startActivity(gototabs);
             }
             else{
                 Toast.makeText(getApplicationContext(),"Invalid Username or Password!",Toast.LENGTH_LONG).show();
