@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="income_statement" >
+        <item>Revenue and Gains</item>
+        <item>Expenses and Losses</item>
+    </array>
+    <array name="asset">
+        <item>Fixed Assets</item>
+        <item>Current Assets</item>
+        <item>Other Assets</item>
+    </array>
+    <array name="liability">
+        <item>Fixed Liability</item>
+        <item>Current Liability</item>
+        <item>Other Liability</item>
+    </array>
+</resources>

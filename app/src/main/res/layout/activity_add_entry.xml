@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="fsms.my1stproject.com.financialstatement.TabActivity">
+    tools:context="fsms.my1stproject.com.financialstatement.AddEntryActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -19,26 +19,8 @@
             android:background="@color/toolbar_color"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tablayout"
-            android:background="@color/toolbar_color"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:tabMode="scrollable"
-            app:tabIndicatorColor="@color/textcolorregister"
-            app:layout_scrollFlags="scroll|enterAlways">
-
-        </android.support.design.widget.TabLayout>
-
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.view.ViewPager
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/viewpagerid"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-    <include layout="@layout/content_tab" />
+    <include layout="@layout/content_add_entry" />
 
 </android.support.design.widget.CoordinatorLayout>

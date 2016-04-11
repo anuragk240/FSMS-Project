@@ -1,11 +1,12 @@
 package adapters;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import constants.ConstantStrings;
 import constants.FragmentConst;
+import constants.TableConst;
 import fragments.IncomeFragment;
 
 /**
@@ -18,19 +19,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment;
-        switch(position){
-            case 0:
-                fragment = new IncomeFragment();
-                break;
-            case 1:
-                fragment = new IncomeFragment();
-                break;
-            case 2:
-            default:
-                fragment = new IncomeFragment();
-                break;
-        }
+        Fragment fragment = IncomeFragment.newInstance(position);
         return fragment;
     }
 

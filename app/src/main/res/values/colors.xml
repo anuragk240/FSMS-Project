@@ -5,8 +5,9 @@
     <color name="colorAccent">#FF4081</color>
     <color name="username_bg">#a5d5ffff</color>
     <color name="toolbar_color">#3ccbff</color>
-    <color name="text_backgroound">#5d7e7e7e</color>
+    <color name="text_background">#497e7e7e</color>
     <color name="textcolorlogin">#000000</color>
     <color name="textcolorregister">#ffffff</color>
-    <color name="fragments_background">#ca53ffc6</color>
+    <color name="button_selected">#6ac4c4c4</color>
+    <color name="button_notselected">#2fd4fffd</color>
 </resources>

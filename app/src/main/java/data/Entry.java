@@ -6,9 +6,18 @@ package data;
 public class Entry {
     private String nameofentry;
     private String date;
-    private long value;
+    private double value;
     private boolean isvaluepresent = false;
     private String tablename;
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getTablename() {
         return tablename;
@@ -34,7 +43,7 @@ public class Entry {
         this.nameofentry = nameofentry;
     }
 
-    public long getValue() {
+    public double getValue() {
         if(isvaluepresent){
             return  value;
         }
@@ -43,7 +52,7 @@ public class Entry {
         }
     }
 
-    public void setValue(long value) {
+    public void setValue(double value) {
         this.value = value;
         isvaluepresent = true;
     }

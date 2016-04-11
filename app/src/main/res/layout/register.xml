@@ -113,7 +113,7 @@
             <Button
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:background="#00ffffff"
+                android:background="@drawable/button_bg_selector"
                 android:text="REGISTER"
                 android:id="@+id/registerbuttonid"
                 android:textStyle="bold"
@@ -129,7 +129,7 @@
                 android:layout_marginBottom="50dp"
                 android:textSize="@dimen/usernametext"
                 android:textColor="@color/textcolorregister"
-                android:background="@color/text_backgroound"/>
+                android:background="@color/text_background"/>
         </TableLayout>
     </ScrollView>
 

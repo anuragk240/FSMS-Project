@@ -3,6 +3,8 @@ package adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.text.Layout;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import constants.EntryTypeConst;
 import data.Entry;
 import fragments.IncomeFragment;
 import fsms.my1stproject.com.financialstatement.R;
@@ -56,7 +59,6 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
         View row = convertView;
         ViewHolder holder = null;
         if(row == null || (row.getTag()) == null){
-            Log.d("inside adapter if", String.valueOf(position));
             LayoutInflater inflater = LayoutInflater.from(activity);
 
             row = inflater.inflate(layoutResources, null);
@@ -68,11 +70,24 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
         }
         else{
             holder = (ViewHolder) row.getTag();
-            Log.d("inside adapter else", String.valueOf(position));
         }
         holder.entry = getItem(position);
+        switch(holder.entry.getNameofentry()){
+            case EntryTypeConst.REVENUE:
+            case EntryTypeConst.EXPENSE:
+            case EntryTypeConst.CURRENT:
+            case EntryTypeConst.FIXED:
+            case EntryTypeConst.OTHER:
+                holder.entryname.setTextAppearance(getContext(), R.style.bold_text);
+                holder.entryvalue.setTextAppearance(getContext(), R.style.bold_text);
+                break;
+            case "Total :":
+                holder.entryname.setPadding(0, 0, 0, 0);
+                break;
+            default:
+                holder.entryname.setPadding(20, 0, 0, 0);
+        }
         holder.entryname.setText(holder.entry.getNameofentry());
-        Log.d("inside adapter none", String.valueOf(position));
         if(holder.entry.getValue() == -1){
             holder.entryvalue.setVisibility(View.INVISIBLE);
         }
@@ -85,7 +100,6 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
 
     @Override
     public int getCount() {
-        Log.d("Size of arraylist", String.valueOf(mydata.size()));
         return mydata.size();
     }
 }

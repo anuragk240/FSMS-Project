@@ -10,10 +10,12 @@
     <item
         android:id="@+id/add_button"
         android:title="Add"
+        android:icon="@drawable/ic_add_white_48dp"
         app:showAsAction="always" />
     <item
-        android:id="@+id/del_button"
-        android:title="Delete"
+        android:id="@+id/ref_button"
+        android:title="Refresh"
+        android:icon="@drawable/ic_refresh_white_48dp"
         app:showAsAction="always" />
 
 </menu>

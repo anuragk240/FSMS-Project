@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 
-import constants.ConstantStrings;
+import constants.RegistrationConst;
 import fsms.my1stproject.com.financialstatement.R;
 
 /**
@@ -26,6 +26,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private EditText loginpassword;
     private Button submit;
     private TextView forgotpassword;
+    public static String company_name;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -38,8 +39,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         switch(v.getId()){
             case R.id.submitid:
                 if(test()){
-                    data.put(ConstantStrings.USERNAME, loginusername.getText().toString());
-                    data.put(ConstantStrings.PASSWORD, loginpassword.getText().toString());
+                    data.put(RegistrationConst.USERNAME, loginusername.getText().toString());
+                    data.put(RegistrationConst.PASSWORD, loginpassword.getText().toString());
                     mcallback.getlogindata(data);
                 }
                 break;

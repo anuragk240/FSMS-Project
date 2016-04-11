@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import java.util.HashMap;
 
-import constants.ConstantStrings;
+import constants.RegistrationConst;
 import fsms.my1stproject.com.financialstatement.R;
 
 public class RegistrationFragment extends Fragment implements View.OnClickListener {
@@ -22,7 +22,6 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
     private EditText firstname, lastname, emailid, username, password, confirmpassword, companyname;
     private TextView passworderror, gotologin;
     private Button registerButton;
-    public static String companyname1;
 
     private HashMap<String, String> data = new HashMap<>();
 
@@ -37,14 +36,14 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
         switch(v.getId()){
             case R.id.registerbuttonid:
                 if (test()) {
-                    data.put(ConstantStrings.FIRSTNAME, firstname.getText().toString());
-                    data.put(ConstantStrings.LASTNAME, lastname.getText().toString());
-                    data.put(ConstantStrings.EMAIL_ID, emailid.getText().toString());
-                    data.put(ConstantStrings.USERNAME, username.getText().toString());
-                    data.put(ConstantStrings.COMPANY_NAME, companyname.getText().toString());
-                    companyname1 = companyname.getText().toString();
-                    Log.d("Regfragment usernme", data.get(ConstantStrings.USERNAME));
-                    data.put(ConstantStrings.PASSWORD, password.getText().toString());
+                    data.put(RegistrationConst.FIRSTNAME, firstname.getText().toString());
+                    data.put(RegistrationConst.LASTNAME, lastname.getText().toString());
+                    data.put(RegistrationConst.EMAIL_ID, emailid.getText().toString());
+                    data.put(RegistrationConst.USERNAME, username.getText().toString());
+                    data.put(RegistrationConst.COMPANY_NAME, companyname.getText().toString());
+
+                    Log.d("Regfragment usernme", data.get(RegistrationConst.USERNAME));
+                    data.put(RegistrationConst.PASSWORD, password.getText().toString());
                     mcallback.getdata(data);
                 }
                 break;

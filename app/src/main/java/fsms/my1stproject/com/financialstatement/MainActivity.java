@@ -1,27 +1,20 @@
 package fsms.my1stproject.com.financialstatement;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-import constants.ConstantStrings;
+import constants.RegistrationConst;
 import fragments.LoginFragment;
 import fragments.RegistrationFragment;
 
@@ -38,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements RegistrationFragm
 
     private RelativeLayout fragmentContainer;
 
+    public static String company_name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,14 +46,14 @@ public class MainActivity extends AppCompatActivity implements RegistrationFragm
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
         //load suitable fragment based on registration status
-        if(!Logininfo.contains(ConstantStrings.IS_REGISTERED)){    //means app is running for the first time
-            editor.putBoolean(ConstantStrings.IS_REGISTERED, false);
+        if(!Logininfo.contains(RegistrationConst.IS_REGISTERED)){    //means app is running for the first time
+            editor.putBoolean(RegistrationConst.IS_REGISTERED, false);
             editor.commit();
             fragmentTransaction.add(R.id.fragment_container, register);
             Log.d("oncreate ","isregistered key is not present");
         }
         else{                   //app is not running for the first time
-            if(!Logininfo.getBoolean(ConstantStrings.IS_REGISTERED, false)){  //user is NOT registered
+            if(!Logininfo.getBoolean(RegistrationConst.IS_REGISTERED, false)){  //user is NOT registered
                 fragmentTransaction.add(R.id.fragment_container, register);
                 Log.d("Not registered ", "RegistrationFragment added");
             }
@@ -83,16 +78,16 @@ public class MainActivity extends AppCompatActivity implements RegistrationFragm
         editor = Logininfo.edit();
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        Log.d("Before putting info ", String.valueOf(Logininfo.contains(ConstantStrings.USERNAME)));
-        editor.putString(ConstantStrings.FIRSTNAME, data.get(ConstantStrings.FIRSTNAME));
-        editor.putString(ConstantStrings.LASTNAME, data.get(ConstantStrings.LASTNAME));
-        editor.putString(ConstantStrings.EMAIL_ID, data.get(ConstantStrings.EMAIL_ID));
-        editor.putString(ConstantStrings.USERNAME, data.get(ConstantStrings.USERNAME));
-        editor.putString(ConstantStrings.PASSWORD, data.get(ConstantStrings.PASSWORD));
-        editor.putString(ConstantStrings.COMPANY_NAME, data.get(ConstantStrings.COMPANY_NAME));
-        editor.putBoolean(ConstantStrings.IS_REGISTERED, true);
+        Log.d("Before putting info ", String.valueOf(Logininfo.contains(RegistrationConst.USERNAME)));
+        editor.putString(RegistrationConst.FIRSTNAME, data.get(RegistrationConst.FIRSTNAME));
+        editor.putString(RegistrationConst.LASTNAME, data.get(RegistrationConst.LASTNAME));
+        editor.putString(RegistrationConst.EMAIL_ID, data.get(RegistrationConst.EMAIL_ID));
+        editor.putString(RegistrationConst.USERNAME, data.get(RegistrationConst.USERNAME));
+        editor.putString(RegistrationConst.PASSWORD, data.get(RegistrationConst.PASSWORD));
+        editor.putString(RegistrationConst.COMPANY_NAME, data.get(RegistrationConst.COMPANY_NAME));
+        editor.putBoolean(RegistrationConst.IS_REGISTERED, true);
         editor.commit();
-        Log.d("After Reg,username ", data.get(ConstantStrings.USERNAME).toString());
+        Log.d("After Reg,username ", data.get(RegistrationConst.USERNAME).toString());
         //navigate to login page
         LoginFragment login = new LoginFragment();
         fragmentTransaction.replace(R.id.fragment_container, login);
@@ -106,16 +101,17 @@ public class MainActivity extends AppCompatActivity implements RegistrationFragm
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         Map<String, ?> map =  Logininfo.getAll();
-        Object value = map.get(ConstantStrings.USERNAME);
+        Object value = map.get(RegistrationConst.USERNAME);
         Log.d("MainAct Username", value.toString());
-        if(Logininfo.contains(ConstantStrings.USERNAME) && Logininfo.contains(ConstantStrings.PASSWORD)){
-            if((data.get(ConstantStrings.USERNAME).equals(Logininfo.getString(ConstantStrings.USERNAME, "Not found"))) &&
-                    (data.get(ConstantStrings.PASSWORD).equals(Logininfo.getString(ConstantStrings.PASSWORD, "Not found")))){
+        if(Logininfo.contains(RegistrationConst.USERNAME) && Logininfo.contains(RegistrationConst.PASSWORD)){
+            if((data.get(RegistrationConst.USERNAME).equals(Logininfo.getString(RegistrationConst.USERNAME, "Not found"))) &&
+                    (data.get(RegistrationConst.PASSWORD).equals(Logininfo.getString(RegistrationConst.PASSWORD, "Not found")))){
                 fragmentTransaction.remove(login);
                 fragmentTransaction.commit();
                 fragmentContainer.setVisibility(View.GONE);
                 Intent gototabs = new Intent(MainActivity.this, TabActivity.class);
                 startActivity(gototabs);
+                finish();
             }
             else{
                 Toast.makeText(getApplicationContext(),"Invalid Username or Password!",Toast.LENGTH_LONG).show();
@@ -125,5 +121,7 @@ public class MainActivity extends AppCompatActivity implements RegistrationFragm
         else{
             Log.d("Getting login data ", "Username or password not found in preferences");
         }
+
+        company_name = Logininfo.getString(RegistrationConst.COMPANY_NAME, "Not found");
     }
 }

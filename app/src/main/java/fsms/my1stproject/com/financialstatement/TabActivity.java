@@ -1,23 +1,23 @@
 package fsms.my1stproject.com.financialstatement;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.Toast;
+
 import adapters.TabsPagerAdapter;
-import constants.ConstantStrings;
+import constants.RegistrationConst;
 import constants.FragmentConst;
 
 public class TabActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener{
 
-    private TabLayout tabLayout;
+    public TabLayout tabLayout;
     private TabsPagerAdapter tabadapter;
     private ViewPager viewpager;
 
@@ -56,14 +56,23 @@ public class TabActivity extends AppCompatActivity implements TabLayout.OnTabSel
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        int current_tab = tabLayout.getSelectedTabPosition();
         switch(item.getItemId()){
             case R.id.action_settings:
 
                 break;
             case R.id.add_button:
-
+                if(current_tab == 3){
+                    Toast.makeText(getApplicationContext(), "Not Applicable!", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Intent addentry = new Intent(TabActivity.this, AddEntryActivity.class);
+                    addentry.putExtra(RegistrationConst.CURRENT_TAB, current_tab);
+                    addentry.putExtra(RegistrationConst.ADD_UPDATE_KEY, "Add");
+                    startActivity(addentry);
+                }
                 return true;
-            case R.id.del_button:
+            case R.id.ref_button:
 
                 return true;
         }

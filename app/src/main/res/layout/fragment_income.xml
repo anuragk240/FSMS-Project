@@ -1,49 +1,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fragments_background"
+    android:background="@drawable/statement_bg"
     tools:context="fragments.IncomeFragment">
 
-    <ScrollView
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Title"
-                android:textAlignment="center"
-                android:textSize="@dimen/statementtext"
-                android:id="@+id/Titleid"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Statement Name"
-                android:textAlignment="center"
-                android:textSize="@dimen/statementtext"
-                android:id="@+id/statementnameid"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Date"
-                android:textAlignment="center"
-                android:textSize="@dimen/statementtext"
-                android:id="@+id/statementdateid"/>
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textAlignment="center"
+        android:textSize="@dimen/statementtext"
+        android:id="@+id/Titleid"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Statement Name"
+        android:textAlignment="center"
+        android:textSize="@dimen/statementtext"
+        android:id="@+id/statementnameid"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Date"
+        android:textAlignment="center"
+        android:textSize="@dimen/statementtext"
+        android:id="@+id/statementdateid"/>
 
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="2dp"
-                android:id="@+id/listviewid">
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="2dp"
+        android:id="@+id/listviewid">
 
-            </ListView>
+    </ListView>
 
-
-        </LinearLayout>
-
-    </ScrollView>
 </LinearLayout>

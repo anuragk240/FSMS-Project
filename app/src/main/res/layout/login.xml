@@ -63,7 +63,7 @@
         android:textAllCaps="true"
         android:id="@+id/submitid"
         android:textColor="@color/textcolorlogin"
-        android:background="#1bffffff"
+        android:background="@drawable/button_bg_selector"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/passwordid"
         android:layout_marginTop="25dp"/>
@@ -74,7 +74,7 @@
         android:text="Forgot Password?"
         android:textColor="@color/textcolorlogin"
         android:id="@+id/forgotpasswordid"
-        android:background="@color/text_backgroound"
+        android:background="@color/text_background"
         android:padding="2dp"
         android:layout_below="@id/submitid"
         android:layout_marginTop="35dp"
@@ -89,7 +89,7 @@
         android:layout_alignRight="@id/forgotpasswordid"
         android:layout_marginTop="10dp"
         android:textColor="@color/textcolorlogin"
-        android:background="@color/text_backgroound"
+        android:background="@color/text_background"
         android:textSize="15sp"/>
 
 </RelativeLayout>
