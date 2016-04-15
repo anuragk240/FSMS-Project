@@ -9,7 +9,9 @@ import android.support.design.widget.TabLayout;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
+import constants.EntryTypeConst;
 import constants.TableConst;
 
 /**
@@ -29,22 +31,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_INCOME_TABLE = "CREATE TABLE " + TableConst.TABLE_INCOME_NAME + "(" +
                 TableConst.NAME + " TEXT PRIMARY KEY, " + TableConst.VALUE + " LONG, " + TableConst.TYPE +
-                " TEXT NOT NULL, " + TableConst.DATE + " TEXT);";
+                " TEXT NOT NULL, " + TableConst.DATE + " LONG NOT NULL);";
 
         String CREATE_ASSET_TABLE = "CREATE TABLE " + TableConst.TABLE_ASSET_NAME + "(" +
                 TableConst.NAME + " TEXT PRIMARY KEY, " + TableConst.VALUE + " LONG, " + TableConst.TYPE +
-                " TEXT NOT NULL, " + TableConst.DATE + " TEXT);";
+                " TEXT NOT NULL, " + TableConst.DATE + " LONG NOT NULL);";
 
         String CREATE_LIABILITY_TABLE = "CREATE TABLE " + TableConst.TABLE_LIABILITY_NAME + "(" +
                 TableConst.NAME + " TEXT PRIMARY KEY, " + TableConst.VALUE + " LONG, " + TableConst.TYPE +
-                " TEXT NOT NULL, " + TableConst.DATE + " TEXT);";
+                " TEXT NOT NULL, " + TableConst.DATE + " LONG NOT NULL);";
+
+        String CREATE_EQUITY_TABLE = "CREATE TABLE " + TableConst.TABLE_EQUITY_NAME + "(" +
+                TableConst.NAME + " TEXT PRIMARY KEY, " + TableConst.VALUE + " LONG, " + TableConst.TYPE +
+                " TEXT NOT NULL, " + TableConst.DATE + " LONG NOT NULL);";
 
         Log.d("New Tables created ", "new");
 
         db.execSQL(CREATE_INCOME_TABLE);
         db.execSQL(CREATE_ASSET_TABLE);
         db.execSQL(CREATE_LIABILITY_TABLE);
-        db.close();
+        db.execSQL(CREATE_EQUITY_TABLE);
     }
 
     @Override
@@ -52,6 +58,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TableConst.TABLE_INCOME_NAME + ";");
         db.execSQL("DROP TABLE IF EXISTS " + TableConst.TABLE_ASSET_NAME + ";");
         db.execSQL("DROP TABLE IF EXISTS " + TableConst.TABLE_LIABILITY_NAME + ";");
+        db.execSQL("DROP TABLE IF EXISTS " + TableConst.TABLE_EQUITY_NAME + ";");
 
         onCreate(db);
     }
@@ -86,8 +93,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             do{
                 Entry entry = new Entry();
                 entry.setNameofentry(mycursor.getString(mycursor.getColumnIndex(TableConst.NAME)));
-                entry.setValue(mycursor.getLong(mycursor.getColumnIndex(TableConst.VALUE)));
-                entry.setDate(mycursor.getString(mycursor.getColumnIndex(TableConst.DATE)));
+                entry.setValue(mycursor.getDouble(mycursor.getColumnIndex(TableConst.VALUE)));
+                entry.setDate(mycursor.getLong(mycursor.getColumnIndex(TableConst.DATE)));
                 entry.setType(mycursor.getString(mycursor.getColumnIndex(TableConst.TYPE)));
                 entry.setTablename(tablename);
 
@@ -119,4 +126,5 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         int count = db.update(newEntry.getTablename(), values, selection, selectionargs);
         db.close();
     }
+
 }

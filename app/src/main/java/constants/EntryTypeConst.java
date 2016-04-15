@@ -9,4 +9,5 @@ public class EntryTypeConst {
     public static final String FIXED = "Fixed";
     public static final String CURRENT = "Current";
     public static final String OTHER = "Others";
+    public static final String EQUITY = "Equity";
 }

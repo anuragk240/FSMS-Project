@@ -6,4 +6,8 @@
     <dimen name="usernametext">18sp</dimen>
     <dimen name="Titletext">20sp</dimen>
     <dimen name="statementtext">22sp</dimen>
+    <dimen name="entrytextsize">18sp</dimen>
+    <dimen name="widthvalue">110dp</dimen>
+    <dimen name="entryrowpadding">5dp</dimen>
+    <dimen name="widthname">200dp</dimen>
 </resources>

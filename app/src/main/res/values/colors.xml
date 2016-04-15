@@ -10,4 +10,5 @@
     <color name="textcolorregister">#ffffff</color>
     <color name="button_selected">#6ac4c4c4</color>
     <color name="button_notselected">#2fd4fffd</color>
+    <color name="table_title_color">#690002</color>
 </resources>

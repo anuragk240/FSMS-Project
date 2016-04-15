@@ -17,6 +17,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import adapters.TabsPagerAdapter;
 import constants.EntryTypeConst;
 import constants.FragmentConst;
@@ -141,16 +145,16 @@ public class IncomeFragment extends Fragment {
 
         title.setText(FragmentConst.TITLE);
         statementname.setText(selectedtab);
-        statementdate.setText("Date");
 
-        incomehandler.refresh(tablename);
+        SimpleDateFormat dtformat = new SimpleDateFormat("LLLL MM, yyyy");
+        statementdate.setText(dtformat.format(Calendar.getInstance().getTime()));
 
         return root;
     }
 
     @Override
     public void onResume() {
-        incomehandler.refresh(tablename);
+        incomehandler.refresh(selectedtab);
         super.onResume();
     }
 

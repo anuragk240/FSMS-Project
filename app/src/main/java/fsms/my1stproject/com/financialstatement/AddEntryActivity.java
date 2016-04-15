@@ -1,8 +1,6 @@
 package fsms.my1stproject.com.financialstatement;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -10,25 +8,26 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import adapters.TabsPagerAdapter;
+import java.util.Calendar;
+
 import constants.EntryTypeConst;
 import constants.RegistrationConst;
 import constants.FragmentConst;
 import constants.TableConst;
 import data.DatabaseHandler;
 import data.Entry;
-import fragments.IncomeFragment;
-import fragments.RegistrationFragment;
 
 public class AddEntryActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Spinner spinner;
-    private EditText name, values, date;
+    private EditText name, values;
+    private DatePicker datePicker;
     private Button save;
     private TextView statementname;
 
@@ -52,7 +51,7 @@ public class AddEntryActivity extends AppCompatActivity implements AdapterView.O
 
         name = (EditText) findViewById(R.id.getname);
         values = (EditText) findViewById(R.id.getvalue);
-        date = (EditText) findViewById(R.id.getdate);
+        datePicker = (DatePicker) findViewById(R.id.datepicker);
         statementname = (TextView) findViewById(R.id.add_title);
 
         spinner = (Spinner) findViewById(R.id.spinnerid);
@@ -68,7 +67,10 @@ public class AddEntryActivity extends AppCompatActivity implements AdapterView.O
                     e.setNameofentry(name.getText().toString());
                     Double l = new Double(values.getText().toString());
                     e.setValue(l.doubleValue());
-                    e.setDate(date.getText().toString());
+                    Log.d("day ", String.valueOf(datePicker.getDayOfMonth()));
+                    Log.d("month ", String.valueOf(datePicker.getMonth()));
+                    Log.d("year ", String.valueOf(datePicker.getYear()));
+                    e.setDate(datePicker.getDayOfMonth(), datePicker.getMonth(), datePicker.getYear());
                     e.setTablename(Table_name);
                     e.setType(type);
                     if(fromactivity.getString(RegistrationConst.ADD_UPDATE_KEY).equals("Add")){
@@ -120,12 +122,13 @@ public class AddEntryActivity extends AppCompatActivity implements AdapterView.O
             setTitle("Update Entry");
             old.setNameofentry(fromactivity.getString(TableConst.NAME));
             old.setValue(fromactivity.getDouble(TableConst.VALUE));
-            old.setDate(fromactivity.getString(TableConst.DATE));
+            old.setDate(fromactivity.getLong(TableConst.DATE));
             old.setTablename(fromactivity.getString("Table Name"));
             old.setType(fromactivity.getString(TableConst.TYPE));
             name.setText(old.getNameofentry());
             values.setText(String.valueOf(old.getValue()));
-            date.setText(old.getDate());
+            datePicker.updateDate(old.getCalenderDate().get(Calendar.YEAR),
+                    old.getCalenderDate().get(Calendar.MONTH), old.getCalenderDate().get(Calendar.DAY_OF_MONTH));
             int pos;
             switch(old.getType()){
                 case EntryTypeConst.REVENUE:
@@ -186,10 +189,6 @@ public class AddEntryActivity extends AppCompatActivity implements AdapterView.O
         }
         if(values.getText().toString().isEmpty()){
             values.setHint("*Required Field");
-            result = false;
-        }
-        if(date.getText().toString().isEmpty()){
-            date.setHint("*Required Field");
             result = false;
         }
         return result;

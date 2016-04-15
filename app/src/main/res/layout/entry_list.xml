@@ -4,27 +4,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/entry_row_id"
-    android:padding="5dp">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Name"
-        android:id="@+id/entrynameid"
-        android:textSize="18sp"
-        android:layout_alignParentLeft="true"
-        android:textAlignment="viewStart"
-        android:gravity="start"/>
+    android:padding="@dimen/entryrowpadding">
 
     <TextView
-        android:layout_width="90dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:id="@+id/entrytextid"/>
+
+    <TextView
+        android:layout_width="@dimen/widthvalue"
         android:layout_height="wrap_content"
         android:text="Value"
         android:id="@+id/entryvalueid"
-        android:textSize="18sp"
-        android:maxWidth="110dp"
+        android:textSize="@dimen/entrytextsize"
+        android:maxWidth="@dimen/widthvalue"
         android:textAlignment="viewEnd"
         android:gravity="end"
         android:layout_alignParentRight="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:layout_toLeftOf="@id/entryvalueid"
+        android:id="@+id/entrynameid"
+        android:textSize="@dimen/entrytextsize"
+        android:layout_alignParentLeft="true"
+        android:textAlignment="viewStart"
+        android:gravity="start"/>
 
 
 </RelativeLayout>

@@ -12,10 +12,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import constants.EntryTypeConst;
+import constants.FragmentConst;
 import data.Entry;
 import fragments.IncomeFragment;
 import fsms.my1stproject.com.financialstatement.R;
@@ -27,7 +30,6 @@ import fsms.my1stproject.com.financialstatement.TabActivity;
 public class EntryAdapter extends ArrayAdapter<Entry> {
     Activity activity;
     int layoutResources;
-    Entry entry;
     ArrayList<Entry> mydata = new ArrayList<>();
 
 
@@ -55,6 +57,11 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
     }
 
     @Override
+    public int getCount() {
+        return mydata.size();
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
         ViewHolder holder = null;
@@ -66,12 +73,34 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
 
             holder.entryname = (TextView) row.findViewById(R.id.entrynameid);
             holder.entryvalue = (TextView) row.findViewById(R.id.entryvalueid);
+            holder.entrytext = (TextView) row.findViewById(R.id.entrytextid);
+
             row.setTag(holder);
         }
         else{
             holder = (ViewHolder) row.getTag();
         }
         holder.entry = getItem(position);
+
+        refreshView(holder);
+
+        applyFilters(holder);
+
+
+
+        holder.entryname.setText(holder.entry.getNameofentry());
+        if(holder.entry.getValue() == -1){
+            holder.entryvalue.setVisibility(View.INVISIBLE);
+        }
+        else{
+            holder.entryvalue.setText(String.valueOf(holder.entry.getValue()));
+            Log.d("value adapter", holder.entry.getNameofentry()+" "+holder.entry.getValue());
+        }
+
+        return row;
+    }
+
+    private void applyFilters(ViewHolder holder) {
         switch(holder.entry.getNameofentry()){
             case EntryTypeConst.REVENUE:
             case EntryTypeConst.EXPENSE:
@@ -82,25 +111,56 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
                 holder.entryvalue.setTextAppearance(getContext(), R.style.bold_text);
                 break;
             case "Total :":
-                holder.entryname.setPadding(0, 0, 0, 0);
+                holder.entryname.setPadding(40, 0, 0, 0);
                 break;
             default:
                 holder.entryname.setPadding(20, 0, 0, 0);
         }
-        holder.entryname.setText(holder.entry.getNameofentry());
-        if(holder.entry.getValue() == -1){
-            holder.entryvalue.setVisibility(View.INVISIBLE);
-        }
-        else{
-            holder.entryvalue.setText(String.valueOf(holder.entry.getValue()));
+
+
+        /* if Statement title date and company name is to be included in listView add this code
+
+        switch (holder.entry.getNameofentry()) {
+            case FragmentConst.INCOME_STATEMENT:
+                holder.entrytext.setText(FragmentConst.INCOME_STATEMENT);
+                holder.entrytext.setTextSize(22);
+                holder.entryname.setPadding(0, 0, 0, 0);
+                break;
+            case FragmentConst.ASSETS:
+                holder.entrytext.setText(FragmentConst.ASSETS);
+                holder.entrytext.setTextSize(22);
+                holder.entryname.setPadding(0, 0, 0, 0);
+                break;
+            case FragmentConst.LIABILITIES:
+                holder.entrytext.setText(FragmentConst.LIABILITIES);
+                holder.entrytext.setTextSize(22);
+                holder.entryname.setPadding(0, 0, 0, 0);
+                break;
         }
 
-        return row;
+        SimpleDateFormat date = new SimpleDateFormat("LLLL MM, yyyy");
+        String str = date.format(Calendar.getInstance().getTime());
+
+        if(holder.entry.getNameofentry() == FragmentConst.TITLE){
+            holder.entrytext.setText(FragmentConst.TITLE);
+            holder.entrytext.setTextSize(22);
+        }
+        else if(holder.entry.getNameofentry() == str){
+            holder.entrytext.setText(str);
+            holder.entrytext.setTextSize(22);
+        }*/
     }
 
-    @Override
-    public int getCount() {
-        return mydata.size();
+    private void refreshView(ViewHolder holder) {
+        holder.entryname.setTextColor(getContext().getResources().getColor(R.color.colorPrimaryDark));
+        holder.entryvalue.setTextColor(getContext().getResources().getColor(R.color.colorPrimaryDark));
+        holder.entryname.setTextAppearance(getContext(), R.style.normal_text);
+        holder.entryvalue.setTextAppearance(getContext(), R.style.normal_text);
+        holder.entryname.setPadding(0, 0, 0, 0);
+        holder.entryvalue.setVisibility(View.VISIBLE);
+        /*holder.entrytext.setTextSize(18);
+        holder.entryname.setTextSize(18);
+        holder.entryvalue.setTextSize(18);*/
     }
 }
 
@@ -109,4 +169,5 @@ class ViewHolder{
     Entry entry;
     TextView entryname;
     TextView entryvalue;
+    TextView entrytext;
 }

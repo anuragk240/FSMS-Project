@@ -9,6 +9,7 @@ public class TableConst {
     public static final String TABLE_INCOME_NAME = "Income_Statement";
     public static final String TABLE_ASSET_NAME = "Assets";
     public static final String TABLE_LIABILITY_NAME = "Liabilities";
+    public static final String TABLE_EQUITY_NAME = "Equity";
 
     public static final String NAME = "Entity_Name";
     public static final String VALUE = "Entity_Value";

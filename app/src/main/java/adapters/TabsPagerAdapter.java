@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import constants.FragmentConst;
 import constants.TableConst;
+import fragments.BalanceSheetFragment;
 import fragments.IncomeFragment;
 
 /**
@@ -19,7 +20,13 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment = IncomeFragment.newInstance(position);
+        Fragment fragment;
+        if(position == 3){
+            fragment = new BalanceSheetFragment();
+        }
+        else{
+            fragment = IncomeFragment.newInstance(position);
+        }
         return fragment;
     }
 
