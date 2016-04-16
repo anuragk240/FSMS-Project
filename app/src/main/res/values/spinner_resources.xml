@@ -14,4 +14,7 @@
         <item>Current Liability</item>
         <item>Other Liability</item>
     </array>
+    <array name="equity">
+        <item>Equity</item>
+    </array>
 </resources>

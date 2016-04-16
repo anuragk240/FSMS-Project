@@ -24,7 +24,7 @@ import fsms.my1stproject.com.financialstatement.R;
 
 public class BalanceSheetFragment extends Fragment {
 
-    private ListView bsheet;
+    static ListView bsheet;
     private StatementHandler BSheet_handler;
 
     public BalanceSheetFragment() {

@@ -13,4 +13,5 @@ public class FragmentConst {
     public static final String ASSETS = "Assets";
     public static final String LIABILITIES = "Liabilities";
     public static final String BALANCE_SHEET = "Balance Sheet";
+    public static final String EQUITY = "Equity";
 }

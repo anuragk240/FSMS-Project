@@ -2,58 +2,58 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="650dp"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="@dimen/entryrowpadding">
 
     <TextView
         android:layout_width="650dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:textAlignment="center"
         android:id="@+id/bsheetcentertext"
         android:text=""/>
 
     <TextView
         android:layout_width="@dimen/widthname"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:text="Name"
         android:maxWidth="@dimen/widthname"
         android:id="@+id/assetnameid"
         android:textSize="@dimen/entrytextsize"
-        android:textAlignment="viewStart"
-        android:gravity="start"/>
+        android:textAlignment="gravity"
+        android:gravity="start|bottom"/>
 
     <TextView
         android:layout_width="@dimen/widthvalue"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:text="Value"
         android:id="@+id/assetvalueid"
         android:textSize="@dimen/entrytextsize"
         android:maxWidth="@dimen/widthvalue"
         android:layout_toRightOf="@id/assetnameid"
-        android:textAlignment="viewEnd"
-        android:gravity="end"
+        android:textAlignment="gravity"
+        android:gravity="end|bottom"
         android:layout_marginRight="40dp"/>
 
     <TextView
         android:layout_width="@dimen/widthname"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:text="Name"
         android:id="@+id/liabilitynameid"
         android:textSize="@dimen/entrytextsize"
         android:layout_toRightOf="@id/assetvalueid"
-        android:textAlignment="viewStart"
-        android:gravity="start"/>
+        android:textAlignment="gravity"
+        android:gravity="start|bottom"/>
 
     <TextView
         android:layout_width="@dimen/widthvalue"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:text="Value"
         android:id="@+id/liabilityvalueid"
         android:textSize="@dimen/entrytextsize"
         android:maxWidth="@dimen/widthvalue"
         android:layout_toRightOf="@id/liabilitynameid"
-        android:textAlignment="viewEnd"
-        android:gravity="end" />
+        android:textAlignment="gravity"
+        android:gravity="end|bottom" />
 
 
 </RelativeLayout>

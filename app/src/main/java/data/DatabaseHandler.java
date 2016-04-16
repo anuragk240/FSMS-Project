@@ -123,7 +123,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String selection = TableConst.NAME + "=?";
         String selectionargs[] =new String[]{oldEntry.getNameofentry()};
 
-        int count = db.update(newEntry.getTablename(), values, selection, selectionargs);
+        nrows = db.update(newEntry.getTablename(), values, selection, selectionargs);
         db.close();
     }
 

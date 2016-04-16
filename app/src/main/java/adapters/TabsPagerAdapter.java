@@ -21,7 +21,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Fragment fragment;
-        if(position == 3){
+        if(position == 4){
             fragment = new BalanceSheetFragment();
         }
         else{
@@ -32,7 +32,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 4;
+        return 5;
     }
 
     @Override
@@ -45,6 +45,8 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
             case 2:
                 return FragmentConst.LIABILITIES;
             case 3:
+                return FragmentConst.EQUITY;
+            case 4:
             default:
                 return FragmentConst.BALANCE_SHEET;
         }

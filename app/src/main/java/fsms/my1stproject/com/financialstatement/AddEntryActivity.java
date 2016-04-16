@@ -75,22 +75,24 @@ public class AddEntryActivity extends AppCompatActivity implements AdapterView.O
                     e.setType(type);
                     if(fromactivity.getString(RegistrationConst.ADD_UPDATE_KEY).equals("Add")){
                         dba.addEntry(e);
+                        if(DatabaseHandler.isinserted == -1){
+                            Toast.makeText(getApplicationContext(), "Duplicate Entry Name!", Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(), "Successfully Saved.", Toast.LENGTH_LONG).show();
+                        }
                     }
                     else {
                         dba.updateEntry(e, old);
-                    }
-                    if(DatabaseHandler.isinserted == -1){
-                        Toast.makeText(getApplicationContext(), "Duplicate Entry Name!", Toast.LENGTH_LONG).show();
-                    }
-                    else{
-                        Toast.makeText(getApplicationContext(), "Successfully Saved.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "No. of Entries updated :" +
+                                DatabaseHandler.nrows, Toast.LENGTH_LONG).show();
                     }
                     finish();
                 }
             }
         });
         spinner.setOnItemSelectedListener(this);
-
+        spinner.setVisibility(View.VISIBLE);
         switch(currenttab){
             case 0:
                 adapter = adapter.createFromResource(AddEntryActivity.this, R.array.income_statement,
@@ -105,12 +107,17 @@ public class AddEntryActivity extends AppCompatActivity implements AdapterView.O
                 Table_name = TableConst.TABLE_ASSET_NAME;
                 break;
             case 2:
-            default:
                 adapter = adapter.createFromResource(AddEntryActivity.this, R.array.liability,
                         android.R.layout.simple_spinner_item);
                 statementname.setText(FragmentConst.LIABILITIES);
                 Table_name = TableConst.TABLE_LIABILITY_NAME;
                 break;
+            case 3:
+            default:
+                adapter = adapter.createFromResource(AddEntryActivity.this, R.array.equity,
+                        android.R.layout.simple_spinner_item);
+                statementname.setText(FragmentConst.EQUITY);
+                Table_name = TableConst.TABLE_EQUITY_NAME;
         }
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -133,6 +140,7 @@ public class AddEntryActivity extends AppCompatActivity implements AdapterView.O
             switch(old.getType()){
                 case EntryTypeConst.REVENUE:
                 case EntryTypeConst.FIXED:
+                case EntryTypeConst.EQUITY:
                     pos = 0;
                     break;
                 case EntryTypeConst.EXPENSE:
@@ -172,6 +180,9 @@ public class AddEntryActivity extends AppCompatActivity implements AdapterView.O
             case "Other Assets":
             case "Other Liability":
                 type = EntryTypeConst.OTHER;
+                break;
+            case "Equity":
+                type = EntryTypeConst.EQUITY;
                 break;
         }
     }

@@ -1,6 +1,7 @@
 package adapters;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,6 +99,14 @@ public class BalanceSheetAdapter extends ArrayAdapter<BalanceSheetEntry> {
             holder.centertext.setText(titles);
             holder.centertext.setTextSize(22);
             holder.centertext.setPadding(0, 0, 0, 0);
+            switch (titles) {
+                case "Not Balanced!!":
+                    holder.centertext.setTextColor(Color.RED);
+                    break;
+                case "Balanced!!":
+                    holder.centertext.setTextColor((Color.parseColor("#13be00")));
+                    break;
+            }
         }
 
         return row;
@@ -122,6 +131,11 @@ public class BalanceSheetAdapter extends ArrayAdapter<BalanceSheetEntry> {
                 name.setTextColor(getContext().getResources().getColor(R.color.table_title_color));
                 name.setPadding(10, 0, 0, 0);
                 break;
+            case "Total Assets :":
+            case "Total User's Equity and Liabilities :":
+                name.setTextColor(Color.parseColor("#c4a700"));
+                value.setTextColor(Color.parseColor("#c4a700"));
+                break;
             default:
                 name.setPadding(20, 0, 0, 0);
         }
@@ -138,6 +152,7 @@ public class BalanceSheetAdapter extends ArrayAdapter<BalanceSheetEntry> {
         holder.assetvalue.setTextAppearance(getContext(), R.style.normal_text);
         holder.liability_equityname.setTextAppearance(getContext(), R.style.normal_text);
         holder.liability_equityvalue.setTextAppearance(getContext(), R.style.normal_text);
+        holder.centertext.setTextAppearance(getContext(), R.style.normal_text);
         holder.assetname.setPadding(0, 0, 0, 0);
         holder.liability_equityname.setPadding(0, 0, 0, 0);
         holder.assetvalue.setVisibility(View.VISIBLE);

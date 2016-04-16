@@ -39,39 +39,54 @@ public class StatementHandler {
         Entry e;
         dbEntry.clear();
         dbEntry2.clear();
+        long total = 0;
+        String str;
+        long total_l_e = 0;
         if (fragmentname.equals(FragmentConst.BALANCE_SHEET)) {
             e = new Entry();
             e.setNameofentry("ASSETS");
             dbEntry.add(e);
-            getData(dbEntry, TableConst.TABLE_ASSET_NAME);
+            total += getData(dbEntry, TableConst.TABLE_ASSET_NAME);
+
 
             e = new Entry();
             e.setNameofentry("LIABILITIES");
             dbEntry2.add(e);
-            getData(dbEntry2, TableConst.TABLE_LIABILITY_NAME);
+            total_l_e += getData(dbEntry2, TableConst.TABLE_LIABILITY_NAME);
             e = null;
             dbEntry2.add(e);
 
             e = new Entry();
             e.setNameofentry("USER'S EQUITY");
             dbEntry2.add(e);
-            getData(dbEntry2, TableConst.TABLE_EQUITY_NAME);
-            loadBalanceSheet();
+            total_l_e += getData(dbEntry2, TableConst.TABLE_EQUITY_NAME);
+            loadBalanceSheet(total, total_l_e);
         }
         else {
             switch (fragmentname) {
                 case FragmentConst.INCOME_STATEMENT:
                     tablename = TableConst.TABLE_INCOME_NAME;
+                    str = "Net Income :";
                     break;
                 case FragmentConst.ASSETS:
                     tablename = TableConst.TABLE_ASSET_NAME;
+                    str = "Total Assets :";
+                    break;
+                case FragmentConst.EQUITY:
+                    tablename = TableConst.TABLE_EQUITY_NAME;
+                    str = "Total Equity :";
                     break;
                 case FragmentConst.LIABILITIES:
                     default:
                     tablename = TableConst.TABLE_LIABILITY_NAME;
+                        str = "Total Liabilities :";
                     break;
             }
-            getData(dbEntry, tablename);
+            total = getData(dbEntry, tablename);
+            e = new Entry();
+            e.setNameofentry(str);
+            e.setValue(total);
+            dbEntry.add(e);
             EntryAdapter adapter = new EntryAdapter(activity, R.layout.entry_list, dbEntry);
 
             listView.setAdapter(adapter);
@@ -79,7 +94,7 @@ public class StatementHandler {
         }
     }
 
-    private void loadBalanceSheet() {
+    private void loadBalanceSheet(long totalassets, long total_l_e) {
         BalanceSheetEntry e;
         ArrayList<BalanceSheetEntry> list = new ArrayList<>();
         setBSheetTitles(list);
@@ -95,32 +110,56 @@ public class StatementHandler {
             list.add(e);
             ++i;
         }
+        Entry entry;
+        e = new BalanceSheetEntry();
+        entry = new Entry();
+        entry.setNameofentry("Total Assets :");
+        entry.setValue(totalassets);
+        e.setAsset(entry);
+
+        entry = new Entry();
+        entry.setNameofentry("Total User's Equity and Liabilities :");
+        entry.setValue(total_l_e);
+        e.setLiability_Equity(entry);
+
+        list.add(e);
+
+        e = new BalanceSheetEntry();
+        if (totalassets != total_l_e) {
+            e.setTitle("Not Balanced!!");
+        }
+        else {
+            e.setTitle("Balanced!!");
+        }
+        list.add(e);
 
         BalanceSheetAdapter adapter = new BalanceSheetAdapter(activity, R.layout.balancesheet_row, list);
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
 
-    private void getData(ArrayList<Entry> e, String tablename){
+    private long getData(ArrayList<Entry> e, String tablename){
+        long total = 0;
         if(String.valueOf(tablename).equals(TableConst.TABLE_INCOME_NAME)){
             //setStatementTitles(tablename);
-            getfromDB(tablename, EntryTypeConst.REVENUE, e);
-            getfromDB(tablename, EntryTypeConst.EXPENSE, e);
+            total += getfromDB(tablename, EntryTypeConst.REVENUE, e);
+            total -= getfromDB(tablename, EntryTypeConst.EXPENSE, e);
 
         }
         else if(String.valueOf(tablename).equals(TableConst.TABLE_ASSET_NAME) ||
                 String.valueOf(tablename).equals(TableConst.TABLE_LIABILITY_NAME)){
             //setStatementTitles(tablename);
-            getfromDB(tablename, EntryTypeConst.CURRENT, e);
-            getfromDB(tablename, EntryTypeConst.FIXED, e);
-            getfromDB(tablename, EntryTypeConst.OTHER, e);
+            total += getfromDB(tablename, EntryTypeConst.CURRENT, e);
+            total += getfromDB(tablename, EntryTypeConst.FIXED, e);
+            total += getfromDB(tablename, EntryTypeConst.OTHER, e);
         }
         else if(String.valueOf(tablename).equals(TableConst.TABLE_EQUITY_NAME)){
-            getfromDB(tablename, EntryTypeConst.EQUITY, e);
+            total += getfromDB(tablename, EntryTypeConst.EQUITY, e);
         }
+        return total;
     }
 
-    private void getfromDB(String tablename, String type, ArrayList<Entry> list){
+    private long getfromDB(String tablename, String type, ArrayList<Entry> list){
 
         ArrayList<Entry> entries = null;
         DatabaseHandler dba = new DatabaseHandler(context);
@@ -148,20 +187,19 @@ public class StatementHandler {
             t.setType(entries.get(i).getType());
             list.add(t);
         }
-
+        long total = 0;
         if(!entries.isEmpty()){
             Entry p = new Entry();
             p.setNameofentry("Total :");
             p.setTablename(tablename);
             p.setType(type);
-            long total = 0;
             for(int i=0; i<entries.size();++i){
                 total+=entries.get(i).getValue();
             }
             p.setValue(total);
             list.add(p);
         }
-
+        return total;
     }
 
     private void setBSheetTitles(ArrayList<BalanceSheetEntry> list){

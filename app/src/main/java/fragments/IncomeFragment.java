@@ -43,7 +43,6 @@ public class IncomeFragment extends Fragment {
     public static final String SELECTED_TAB_KEY = "Selected Tab";
     public static final String TABLE_KEY = "Selected Table";
     //Arguments
-    private String tablename;
     private String selectedtab;
 
     public IncomeFragment() {
@@ -65,6 +64,10 @@ public class IncomeFragment extends Fragment {
             case 2:
                 bundle.putString(SELECTED_TAB_KEY, FragmentConst.LIABILITIES);
                 bundle.putString(TABLE_KEY, TableConst.TABLE_LIABILITY_NAME);
+                break;
+            case 3:
+                bundle.putString(SELECTED_TAB_KEY, FragmentConst.EQUITY);
+                bundle.putString(TABLE_KEY, TableConst.TABLE_EQUITY_NAME);
                 break;
             default:
                 bundle.putString(SELECTED_TAB_KEY, FragmentConst.LIABILITIES);
@@ -110,7 +113,10 @@ public class IncomeFragment extends Fragment {
                 case R.id.del_button:
                     dba.deleteEntry(e);
                     Toast.makeText(getContext(), "No. of Rows Affected :" + DatabaseHandler.nrows, Toast.LENGTH_LONG).show();
-                    incomehandler.refresh(tablename);
+                    incomehandler.refresh(selectedtab);
+                    StatementHandler bsheet_handler =  new StatementHandler(getContext(), getActivity(),
+                            BalanceSheetFragment.bsheet);
+                    bsheet_handler.refresh(FragmentConst.BALANCE_SHEET);
                     return true;
                 default:
                     return super.onContextItemSelected(item);
@@ -125,7 +131,6 @@ public class IncomeFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         selectedtab = getArguments().getString(SELECTED_TAB_KEY);
-        tablename = getArguments().getString(TABLE_KEY);
     }
 
     @Override
@@ -165,8 +170,10 @@ public class IncomeFragment extends Fragment {
             case FragmentConst.ASSETS:
                 return 1;
             case FragmentConst.LIABILITIES:
-            default:
                 return 2;
+            case FragmentConst.EQUITY:
+            default:
+                return 3;
         }
     }
 
@@ -177,6 +184,7 @@ public class IncomeFragment extends Fragment {
             case EntryTypeConst.OTHER:
             case EntryTypeConst.REVENUE:
             case EntryTypeConst.EXPENSE:
+            case EntryTypeConst.EQUITY:
             case "Total :":
                 return true;
         }

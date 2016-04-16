@@ -2,6 +2,7 @@ package adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Layout;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -107,60 +108,44 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
             case EntryTypeConst.CURRENT:
             case EntryTypeConst.FIXED:
             case EntryTypeConst.OTHER:
+            case EntryTypeConst.EQUITY:
                 holder.entryname.setTextAppearance(getContext(), R.style.bold_text);
                 holder.entryvalue.setTextAppearance(getContext(), R.style.bold_text);
                 break;
             case "Total :":
                 holder.entryname.setPadding(40, 0, 0, 0);
                 break;
+            case "Net Income :":
+                if (holder.entry.getValue() < 0){
+                    holder.entryvalue.setTextColor(Color.RED);
+                    holder.entryname.setTextColor(Color.RED);
+                }
+                else if (holder.entry.getValue() > 0) {
+                    holder.entryvalue.setTextColor(Color.parseColor("#13be00"));  //Green
+                    holder.entryname.setTextColor(Color.parseColor("#13be00"));   //green
+                }
+                else {
+                    holder.entryvalue.setTextColor(Color.parseColor("#c4a700"));  //yellow
+                    holder.entryname.setTextColor(Color.parseColor("#c4a700"));   //yellow
+                }
+                break;
+            case "Total Assets :":
+            case "Total Liabilities :":
+            case "Total Equity :":
+                holder.entryvalue.setTextColor(Color.parseColor("#c4a700"));  //yellow
+                holder.entryname.setTextColor(Color.parseColor("#c4a700"));   //yellow
+                break;
             default:
                 holder.entryname.setPadding(20, 0, 0, 0);
         }
 
-
-        /* if Statement title date and company name is to be included in listView add this code
-
-        switch (holder.entry.getNameofentry()) {
-            case FragmentConst.INCOME_STATEMENT:
-                holder.entrytext.setText(FragmentConst.INCOME_STATEMENT);
-                holder.entrytext.setTextSize(22);
-                holder.entryname.setPadding(0, 0, 0, 0);
-                break;
-            case FragmentConst.ASSETS:
-                holder.entrytext.setText(FragmentConst.ASSETS);
-                holder.entrytext.setTextSize(22);
-                holder.entryname.setPadding(0, 0, 0, 0);
-                break;
-            case FragmentConst.LIABILITIES:
-                holder.entrytext.setText(FragmentConst.LIABILITIES);
-                holder.entrytext.setTextSize(22);
-                holder.entryname.setPadding(0, 0, 0, 0);
-                break;
-        }
-
-        SimpleDateFormat date = new SimpleDateFormat("LLLL MM, yyyy");
-        String str = date.format(Calendar.getInstance().getTime());
-
-        if(holder.entry.getNameofentry() == FragmentConst.TITLE){
-            holder.entrytext.setText(FragmentConst.TITLE);
-            holder.entrytext.setTextSize(22);
-        }
-        else if(holder.entry.getNameofentry() == str){
-            holder.entrytext.setText(str);
-            holder.entrytext.setTextSize(22);
-        }*/
     }
 
     private void refreshView(ViewHolder holder) {
-        holder.entryname.setTextColor(getContext().getResources().getColor(R.color.colorPrimaryDark));
-        holder.entryvalue.setTextColor(getContext().getResources().getColor(R.color.colorPrimaryDark));
         holder.entryname.setTextAppearance(getContext(), R.style.normal_text);
         holder.entryvalue.setTextAppearance(getContext(), R.style.normal_text);
         holder.entryname.setPadding(0, 0, 0, 0);
         holder.entryvalue.setVisibility(View.VISIBLE);
-        /*holder.entrytext.setTextSize(18);
-        holder.entryname.setTextSize(18);
-        holder.entryvalue.setTextSize(18);*/
     }
 }
 

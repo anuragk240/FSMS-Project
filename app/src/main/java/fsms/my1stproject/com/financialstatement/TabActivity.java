@@ -32,6 +32,7 @@ public class TabActivity extends AppCompatActivity implements TabLayout.OnTabSel
         tabLayout.addTab(tabLayout.newTab().setText(FragmentConst.INCOME_STATEMENT));
         tabLayout.addTab(tabLayout.newTab().setText(FragmentConst.ASSETS));
         tabLayout.addTab(tabLayout.newTab().setText(FragmentConst.LIABILITIES));
+        tabLayout.addTab(tabLayout.newTab().setText(FragmentConst.EQUITY));
         tabLayout.addTab(tabLayout.newTab().setText(FragmentConst.BALANCE_SHEET));
 
         tabLayout.setTabTextColors(getResources().getColorStateList(R.color.tabtextcolorselector));
@@ -62,7 +63,7 @@ public class TabActivity extends AppCompatActivity implements TabLayout.OnTabSel
 
                 break;
             case R.id.add_button:
-                if(current_tab == 3){
+                if(current_tab == 4){
                     Toast.makeText(getApplicationContext(), "Not Applicable!", Toast.LENGTH_LONG).show();
                 }
                 else {
