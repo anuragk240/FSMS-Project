@@ -1,18 +1,29 @@
 package data;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
  * Created by Anurag on 25-03-2016.
  */
-public class Entry {
+public class Entry implements Serializable {
+
+    private static final long serializableUID = 10L;
+
     private String nameofentry;
-    private Calendar date = Calendar.getInstance();
+    private Calendar date;
     private double value;
-    private boolean isDatepresent = false;
-    private boolean isvaluepresent = false;
+    private boolean isDatepresent;
+    private boolean isvaluepresent;
     private String tablename;
     private String type;
+
+    public Entry(){
+        nameofentry = "";
+        date = Calendar.getInstance();
+        isDatepresent = false;
+        isvaluepresent = false;
+    }
 
     public String getType() {
         return type;

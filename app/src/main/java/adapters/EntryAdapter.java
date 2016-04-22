@@ -3,6 +3,7 @@ package adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.text.Layout;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -18,8 +19,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import constants.ColorConst;
 import constants.EntryTypeConst;
 import constants.FragmentConst;
+import constants.MiscConst;
 import data.Entry;
 import fragments.IncomeFragment;
 import fsms.my1stproject.com.financialstatement.R;
@@ -65,7 +68,7 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
-        ViewHolder holder = null;
+        ViewHolder holder;
         if(row == null || (row.getTag()) == null){
             LayoutInflater inflater = LayoutInflater.from(activity);
 
@@ -74,7 +77,12 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
 
             holder.entryname = (TextView) row.findViewById(R.id.entrynameid);
             holder.entryvalue = (TextView) row.findViewById(R.id.entryvalueid);
-            holder.entrytext = (TextView) row.findViewById(R.id.entrytextid);
+            //holder.entrytext = (TextView) row.findViewById(R.id.entrytextid);
+
+            Typeface fonts = Typeface.createFromAsset(activity.getAssets(), MiscConst.FONT_TIMESNEWROMAN);
+            holder.entryname.setTypeface(fonts);
+            holder.entryvalue.setTypeface(fonts);
+            //holder.entrytext.setTypeface(fonts);
 
             row.setTag(holder);
         }
@@ -95,7 +103,6 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
         }
         else{
             holder.entryvalue.setText(String.valueOf(holder.entry.getValue()));
-            Log.d("value adapter", holder.entry.getNameofentry()+" "+holder.entry.getValue());
         }
 
         return row;
@@ -109,31 +116,31 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
             case EntryTypeConst.FIXED:
             case EntryTypeConst.OTHER:
             case EntryTypeConst.EQUITY:
-                holder.entryname.setTextAppearance(getContext(), R.style.bold_text);
-                holder.entryvalue.setTextAppearance(getContext(), R.style.bold_text);
+                holder.entryname.setTextColor(Color.BLACK);
+                holder.entryvalue.setTextColor(Color.BLACK);
                 break;
-            case "Total :":
+            case MiscConst.TOTAL:
                 holder.entryname.setPadding(40, 0, 0, 0);
                 break;
-            case "Net Income :":
+            case MiscConst.NET_INCOME:
                 if (holder.entry.getValue() < 0){
                     holder.entryvalue.setTextColor(Color.RED);
                     holder.entryname.setTextColor(Color.RED);
                 }
                 else if (holder.entry.getValue() > 0) {
-                    holder.entryvalue.setTextColor(Color.parseColor("#13be00"));  //Green
-                    holder.entryname.setTextColor(Color.parseColor("#13be00"));   //green
+                    holder.entryvalue.setTextColor(Color.parseColor(ColorConst.GREEN));  //Green
+                    holder.entryname.setTextColor(Color.parseColor(ColorConst.GREEN));   //green
                 }
                 else {
-                    holder.entryvalue.setTextColor(Color.parseColor("#c4a700"));  //yellow
-                    holder.entryname.setTextColor(Color.parseColor("#c4a700"));   //yellow
+                    holder.entryvalue.setTextColor(Color.parseColor(ColorConst.YELLOW));  //yellow
+                    holder.entryname.setTextColor(Color.parseColor(ColorConst.YELLOW));   //yellow
                 }
                 break;
-            case "Total Assets :":
-            case "Total Liabilities :":
-            case "Total Equity :":
-                holder.entryvalue.setTextColor(Color.parseColor("#c4a700"));  //yellow
-                holder.entryname.setTextColor(Color.parseColor("#c4a700"));   //yellow
+            case MiscConst.TOTAL_ASSETS:
+            case MiscConst.TOTAL_LIABILITIES:
+            case MiscConst.TOTAL_EQUITY:
+                holder.entryvalue.setTextColor(Color.parseColor(ColorConst.YELLOW));  //yellow
+                holder.entryname.setTextColor(Color.parseColor(ColorConst.YELLOW));   //yellow
                 break;
             default:
                 holder.entryname.setPadding(20, 0, 0, 0);
@@ -142,10 +149,11 @@ public class EntryAdapter extends ArrayAdapter<Entry> {
     }
 
     private void refreshView(ViewHolder holder) {
-        holder.entryname.setTextAppearance(getContext(), R.style.normal_text);
-        holder.entryvalue.setTextAppearance(getContext(), R.style.normal_text);
+        holder.entryname.setTextColor(Color.parseColor(ColorConst.PRIMARY_DARK));
+        holder.entryvalue.setTextColor(Color.parseColor(ColorConst.PRIMARY_DARK));
         holder.entryname.setPadding(0, 0, 0, 0);
         holder.entryvalue.setVisibility(View.VISIBLE);
+
     }
 }
 

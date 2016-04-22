@@ -2,13 +2,17 @@ package adapters;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import java.util.ArrayList;
+
+import constants.ColorConst;
 import constants.EntryTypeConst;
+import constants.MiscConst;
 import data.BalanceSheetEntry;
 import data.Entry;
 import fsms.my1stproject.com.financialstatement.R;
@@ -52,7 +56,7 @@ public class BalanceSheetAdapter extends ArrayAdapter<BalanceSheetEntry> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
-        BsheetViewHolder holder = null;
+        BsheetViewHolder holder;
         if(row == null || (row.getTag()) == null){
             LayoutInflater inflater = LayoutInflater.from(activity);
 
@@ -64,6 +68,13 @@ public class BalanceSheetAdapter extends ArrayAdapter<BalanceSheetEntry> {
             holder.liability_equityname = (TextView) row.findViewById(R.id.liabilitynameid);
             holder.liability_equityvalue = (TextView) row.findViewById(R.id.liabilityvalueid);
             holder.centertext = (TextView) row.findViewById(R.id.bsheetcentertext);
+
+            Typeface font = Typeface.createFromAsset(activity.getAssets(), MiscConst.FONT_TIMESNEWROMAN);
+            holder.assetname.setTypeface(font);
+            holder.assetvalue.setTypeface(font);
+            holder.liability_equityname.setTypeface(font);
+            holder.liability_equityvalue.setTypeface(font);
+            holder.centertext.setTypeface(font);
 
             row.setTag(holder);
         }
@@ -85,7 +96,7 @@ public class BalanceSheetAdapter extends ArrayAdapter<BalanceSheetEntry> {
                 holder.assetvalue.setVisibility(View.INVISIBLE);
             }
             holder.assetvalue.setText(String.valueOf(asset.getValue()));
-            applyFilters(asset, holder.assetname, holder.assetvalue, holder.centertext);
+            applyFilters(asset, holder.assetname, holder.assetvalue);
         }
         if(l_equity != null){
             holder.liability_equityname.setText(l_equity.getNameofentry());
@@ -93,18 +104,18 @@ public class BalanceSheetAdapter extends ArrayAdapter<BalanceSheetEntry> {
                 holder.liability_equityvalue.setVisibility(View.INVISIBLE);
             }
             holder.liability_equityvalue.setText(String.valueOf(l_equity.getValue()));
-            applyFilters(l_equity, holder.liability_equityname, holder.liability_equityvalue, holder.centertext);
+            applyFilters(l_equity, holder.liability_equityname, holder.liability_equityvalue);
         }
         if(titles != null){
             holder.centertext.setText(titles);
             holder.centertext.setTextSize(22);
             holder.centertext.setPadding(0, 0, 0, 0);
             switch (titles) {
-                case "Not Balanced!!":
+                case MiscConst.NOT_BALANCED:
                     holder.centertext.setTextColor(Color.RED);
                     break;
-                case "Balanced!!":
-                    holder.centertext.setTextColor((Color.parseColor("#13be00")));
+                case MiscConst.BALANCED:
+                    holder.centertext.setTextColor((Color.parseColor(ColorConst.GREEN)));
                     break;
             }
         }
@@ -112,29 +123,28 @@ public class BalanceSheetAdapter extends ArrayAdapter<BalanceSheetEntry> {
         return row;
     }
 
-    private void applyFilters(Entry e, TextView name, TextView value, TextView center) {
+    private void applyFilters(Entry e, TextView name, TextView value) {
         switch(e.getNameofentry()){
             case EntryTypeConst.CURRENT:
             case EntryTypeConst.FIXED:
             case EntryTypeConst.OTHER:
             case EntryTypeConst.EQUITY:
-                name.setTextAppearance(getContext(), R.style.bold_text);
-                value.setTextAppearance(getContext(), R.style.bold_text);
+                name.setTextColor(Color.BLACK);
+                value.setTextColor(Color.BLACK);
                 break;
-            case "Total :":
+            case MiscConst.TOTAL:
                 name.setPadding(40, 0, 0, 0);
                 break;
-            case "USER'S EQUITY":
-            case "ASSETS":
-            case "LIABILITIES":
-                name.setTextAppearance(getContext(), R.style.bold_text);
-                name.setTextColor(getContext().getResources().getColor(R.color.table_title_color));
+            case MiscConst.HEADING_EQUITY:
+            case MiscConst.HEADING_ASSETS:
+            case MiscConst.HEADING_LIABILITY:
+                name.setTextColor(Color.parseColor(ColorConst.TITLE_COLOR));
                 name.setPadding(10, 0, 0, 0);
                 break;
-            case "Total Assets :":
-            case "Total User's Equity and Liabilities :":
-                name.setTextColor(Color.parseColor("#c4a700"));
-                value.setTextColor(Color.parseColor("#c4a700"));
+            case MiscConst.TOTAL_ASSETS:
+            case MiscConst.TOTAL_E_AND_L:
+                name.setTextColor(Color.parseColor(ColorConst.YELLOW));
+                value.setTextColor(Color.parseColor(ColorConst.YELLOW));
                 break;
             default:
                 name.setPadding(20, 0, 0, 0);
@@ -148,20 +158,16 @@ public class BalanceSheetAdapter extends ArrayAdapter<BalanceSheetEntry> {
         holder.liability_equityname.setText("");
         holder.liability_equityvalue.setText("");
         holder.centertext.setText("");
-        holder.assetname.setTextAppearance(getContext(), R.style.normal_text);
-        holder.assetvalue.setTextAppearance(getContext(), R.style.normal_text);
-        holder.liability_equityname.setTextAppearance(getContext(), R.style.normal_text);
-        holder.liability_equityvalue.setTextAppearance(getContext(), R.style.normal_text);
-        holder.centertext.setTextAppearance(getContext(), R.style.normal_text);
         holder.assetname.setPadding(0, 0, 0, 0);
         holder.liability_equityname.setPadding(0, 0, 0, 0);
         holder.assetvalue.setVisibility(View.VISIBLE);
         holder.liability_equityvalue.setVisibility(View.VISIBLE);
-        holder.assetname.setTextSize(18);
-        holder.assetvalue.setTextSize(18);
-        holder.liability_equityname.setTextSize(18);
-        holder.liability_equityvalue.setTextSize(18);
-        holder.centertext.setTextSize(18);
+
+        holder.assetname.setTextColor(Color.parseColor(ColorConst.PRIMARY_DARK));
+        holder.assetvalue.setTextColor(Color.parseColor(ColorConst.PRIMARY_DARK));
+        holder.liability_equityname.setTextColor(Color.parseColor(ColorConst.PRIMARY_DARK));
+        holder.liability_equityvalue.setTextColor(Color.parseColor(ColorConst.PRIMARY_DARK));
+        holder.centertext.setTextColor(Color.parseColor(ColorConst.PRIMARY_DARK));
     }
 
 }

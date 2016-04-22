@@ -2,6 +2,7 @@ package fragments;
 
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 
+import constants.MiscConst;
 import constants.RegistrationConst;
 import fsms.my1stproject.com.financialstatement.R;
 
@@ -25,8 +27,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private EditText loginusername;
     private EditText loginpassword;
     private Button submit;
-    private TextView forgotpassword;
-    public static String company_name;
+    private TextView forgotpassword, app_title;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -77,6 +78,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         loginpassword = (EditText) v.findViewById(R.id.passwordid);
         submit = (Button) v.findViewById(R.id.submitid);
         forgotpassword = (TextView) v.findViewById(R.id.forgotpasswordid);
+        app_title = (TextView) v.findViewById(R.id.login_app_title);
+
+        Typeface font = Typeface.createFromAsset(getActivity().getAssets(), MiscConst.FONT_TIMESNEWROMAN_BOLD);
+        app_title.setTypeface(font);
 
         submit.setOnClickListener(this);
         forgotpassword.setOnClickListener(this);

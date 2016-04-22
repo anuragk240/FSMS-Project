@@ -1,6 +1,7 @@
 package fragments;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -14,13 +15,14 @@ import android.widget.Toast;
 
 import java.util.HashMap;
 
+import constants.MiscConst;
 import constants.RegistrationConst;
 import fsms.my1stproject.com.financialstatement.R;
 
 public class RegistrationFragment extends Fragment implements View.OnClickListener {
 
     private EditText firstname, lastname, emailid, username, password, confirmpassword, companyname;
-    private TextView passworderror, gotologin;
+    private TextView passworderror, gotologin, app_title;
     private Button registerButton;
 
     private HashMap<String, String> data = new HashMap<>();
@@ -92,6 +94,10 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
         passworderror = (TextView) v.findViewById(R.id.passworderror);
         gotologin = (TextView) v.findViewById(R.id.gotologinid);
         companyname = (EditText) v.findViewById(R.id.companynameid);
+        app_title = (TextView) v.findViewById(R.id.app_titleid);
+
+        Typeface font = Typeface.createFromAsset(getActivity().getAssets(), MiscConst.FONT_TIMESNEWROMAN_BOLD);
+        app_title.setTypeface(font);
 
         registerButton.setOnClickListener(this);
         passworderror.setOnClickListener(this);

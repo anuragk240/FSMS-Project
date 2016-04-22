@@ -11,7 +11,4 @@ public class RegistrationConst {
     public final static String PASSWORD = "password";
     public final static String USERNAME = "username";
     public final static String COMPANY_NAME = "Company Name";
-    public static final String CURRENT_TAB = "Current Tab";
-    public static final String ADD_UPDATE_KEY = "Add or update";
-    public static final String DATE_PICKER_TAG = "Date_Picker";
 }

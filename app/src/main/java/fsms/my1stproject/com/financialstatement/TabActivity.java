@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import adapters.TabsPagerAdapter;
+import constants.MiscConst;
 import constants.RegistrationConst;
 import constants.FragmentConst;
 
@@ -68,13 +69,12 @@ public class TabActivity extends AppCompatActivity implements TabLayout.OnTabSel
                 }
                 else {
                     Intent addentry = new Intent(TabActivity.this, AddEntryActivity.class);
-                    addentry.putExtra(RegistrationConst.CURRENT_TAB, current_tab);
-                    addentry.putExtra(RegistrationConst.ADD_UPDATE_KEY, "Add");
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(MiscConst.CURRENT_TAB, current_tab);
+                    bundle.putString(MiscConst.ADD_UPDATE_KEY, MiscConst.ADD);
+                    addentry.putExtra(MiscConst.BUNDLE_KEY, bundle);
                     startActivity(addentry);
                 }
-                return true;
-            case R.id.ref_button:
-
                 return true;
         }
         return super.onOptionsItemSelected(item);

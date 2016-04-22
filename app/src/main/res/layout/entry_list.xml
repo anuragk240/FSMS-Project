@@ -15,9 +15,9 @@
     <TextView
         android:layout_width="@dimen/widthvalue"
         android:layout_height="wrap_content"
-        android:text="Value"
         android:id="@+id/entryvalueid"
         android:textSize="@dimen/entrytextsize"
+        android:textColor="@color/colorPrimaryDark"
         android:maxWidth="@dimen/widthvalue"
         android:textAlignment="viewEnd"
         android:gravity="end"
@@ -26,9 +26,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Name"
         android:layout_toLeftOf="@id/entryvalueid"
         android:id="@+id/entrynameid"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/entrytextsize"
         android:layout_alignParentLeft="true"
         android:textAlignment="viewStart"

@@ -4,12 +4,14 @@ package data;
  * Created by Anurag Kumar on 14-Apr-16.
  */
 public class BalanceSheetEntry {
-    private String title = null;
-    private Entry Asset = null;
-    private Entry Liability_Equity = null;
+    private String title;
+    private Entry Asset;
+    private Entry Liability_Equity;
 
     public BalanceSheetEntry() {
-
+        title = null;
+        Asset = null;
+        Liability_Equity = null;
     }
 
     public String getTitle() {
@@ -18,11 +20,6 @@ public class BalanceSheetEntry {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public BalanceSheetEntry(Entry asset, Entry liabilityOrEquity) {
-        Asset = asset;
-        Liability_Equity = liabilityOrEquity;
     }
 
     public Entry getAsset() {

@@ -13,6 +13,7 @@ import adapters.BalanceSheetAdapter;
 import adapters.EntryAdapter;
 import constants.EntryTypeConst;
 import constants.FragmentConst;
+import constants.MiscConst;
 import constants.TableConst;
 import fsms.my1stproject.com.financialstatement.R;
 
@@ -44,20 +45,20 @@ public class StatementHandler {
         long total_l_e = 0;
         if (fragmentname.equals(FragmentConst.BALANCE_SHEET)) {
             e = new Entry();
-            e.setNameofentry("ASSETS");
+            e.setNameofentry(MiscConst.HEADING_ASSETS);
             dbEntry.add(e);
             total += getData(dbEntry, TableConst.TABLE_ASSET_NAME);
 
 
             e = new Entry();
-            e.setNameofentry("LIABILITIES");
+            e.setNameofentry(MiscConst.HEADING_LIABILITY);
             dbEntry2.add(e);
             total_l_e += getData(dbEntry2, TableConst.TABLE_LIABILITY_NAME);
             e = null;
             dbEntry2.add(e);
 
             e = new Entry();
-            e.setNameofentry("USER'S EQUITY");
+            e.setNameofentry(MiscConst.HEADING_EQUITY);
             dbEntry2.add(e);
             total_l_e += getData(dbEntry2, TableConst.TABLE_EQUITY_NAME);
             loadBalanceSheet(total, total_l_e);
@@ -66,20 +67,20 @@ public class StatementHandler {
             switch (fragmentname) {
                 case FragmentConst.INCOME_STATEMENT:
                     tablename = TableConst.TABLE_INCOME_NAME;
-                    str = "Net Income :";
+                    str = MiscConst.NET_INCOME;
                     break;
                 case FragmentConst.ASSETS:
                     tablename = TableConst.TABLE_ASSET_NAME;
-                    str = "Total Assets :";
+                    str = MiscConst.TOTAL_ASSETS;
                     break;
                 case FragmentConst.EQUITY:
                     tablename = TableConst.TABLE_EQUITY_NAME;
-                    str = "Total Equity :";
+                    str = MiscConst.TOTAL_EQUITY;
                     break;
                 case FragmentConst.LIABILITIES:
                     default:
                     tablename = TableConst.TABLE_LIABILITY_NAME;
-                        str = "Total Liabilities :";
+                        str = MiscConst.TOTAL_LIABILITIES;
                     break;
             }
             total = getData(dbEntry, tablename);
@@ -113,12 +114,12 @@ public class StatementHandler {
         Entry entry;
         e = new BalanceSheetEntry();
         entry = new Entry();
-        entry.setNameofentry("Total Assets :");
+        entry.setNameofentry(MiscConst.TOTAL_ASSETS);
         entry.setValue(totalassets);
         e.setAsset(entry);
 
         entry = new Entry();
-        entry.setNameofentry("Total User's Equity and Liabilities :");
+        entry.setNameofentry(MiscConst.TOTAL_E_AND_L);
         entry.setValue(total_l_e);
         e.setLiability_Equity(entry);
 
@@ -126,10 +127,10 @@ public class StatementHandler {
 
         e = new BalanceSheetEntry();
         if (totalassets != total_l_e) {
-            e.setTitle("Not Balanced!!");
+            e.setTitle(MiscConst.NOT_BALANCED);
         }
         else {
-            e.setTitle("Balanced!!");
+            e.setTitle(MiscConst.BALANCED);
         }
         list.add(e);
 
@@ -161,7 +162,7 @@ public class StatementHandler {
 
     private long getfromDB(String tablename, String type, ArrayList<Entry> list){
 
-        ArrayList<Entry> entries = null;
+        ArrayList<Entry> entries;
         DatabaseHandler dba = new DatabaseHandler(context);
         entries = dba.getEntry(tablename, type);
 
@@ -181,7 +182,6 @@ public class StatementHandler {
             Entry t = new Entry();
             t.setNameofentry(entries.get(i).getNameofentry());
             t.setValue(entries.get(i).getValue());
-            Log.d("value getfromdb", String.valueOf(entries.get(i).getValue()));
             t.setDate(entries.get(i).getDate());
             t.setTablename(entries.get(i).getTablename());
             t.setType(entries.get(i).getType());
@@ -190,7 +190,7 @@ public class StatementHandler {
         long total = 0;
         if(!entries.isEmpty()){
             Entry p = new Entry();
-            p.setNameofentry("Total :");
+            p.setNameofentry(MiscConst.TOTAL);
             p.setTablename(tablename);
             p.setType(type);
             for(int i=0; i<entries.size();++i){
@@ -205,17 +205,17 @@ public class StatementHandler {
     private void setBSheetTitles(ArrayList<BalanceSheetEntry> list){
         BalanceSheetEntry e = new BalanceSheetEntry();
 
-        e.setTitle(FragmentConst.BALANCE_SHEET);
-        list.add(e);
-
-        e = new BalanceSheetEntry();
-
         e.setTitle(FragmentConst.TITLE);
         list.add(e);
 
         e = new BalanceSheetEntry();
 
-        SimpleDateFormat dtfrmat = new SimpleDateFormat("LLLL MM, yyyy");
+        e.setTitle(FragmentConst.BALANCE_SHEET);
+        list.add(e);
+
+        e = new BalanceSheetEntry();
+
+        SimpleDateFormat dtfrmat = new SimpleDateFormat("LLLL dd, yyyy");
         String date = dtfrmat.format(Calendar.getInstance().getTime());
         e.setTitle(date);
         list.add(e);

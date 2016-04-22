@@ -9,13 +9,15 @@
         android:layout_width="650dp"
         android:layout_height="match_parent"
         android:textAlignment="center"
+        android:textSize="@dimen/statementtext"
+        android:textColor="@color/colorPrimaryDark"
         android:id="@+id/bsheetcentertext"
         android:text=""/>
 
     <TextView
         android:layout_width="@dimen/widthname"
         android:layout_height="match_parent"
-        android:text="Name"
+        android:textColor="@color/colorPrimaryDark"
         android:maxWidth="@dimen/widthname"
         android:id="@+id/assetnameid"
         android:textSize="@dimen/entrytextsize"
@@ -25,9 +27,9 @@
     <TextView
         android:layout_width="@dimen/widthvalue"
         android:layout_height="match_parent"
-        android:text="Value"
         android:id="@+id/assetvalueid"
         android:textSize="@dimen/entrytextsize"
+        android:textColor="@color/colorPrimaryDark"
         android:maxWidth="@dimen/widthvalue"
         android:layout_toRightOf="@id/assetnameid"
         android:textAlignment="gravity"
@@ -37,9 +39,9 @@
     <TextView
         android:layout_width="@dimen/widthname"
         android:layout_height="match_parent"
-        android:text="Name"
         android:id="@+id/liabilitynameid"
         android:textSize="@dimen/entrytextsize"
+        android:textColor="@color/colorPrimaryDark"
         android:layout_toRightOf="@id/assetvalueid"
         android:textAlignment="gravity"
         android:gravity="start|bottom"/>
@@ -47,8 +49,8 @@
     <TextView
         android:layout_width="@dimen/widthvalue"
         android:layout_height="match_parent"
-        android:text="Value"
         android:id="@+id/liabilityvalueid"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/entrytextsize"
         android:maxWidth="@dimen/widthvalue"
         android:layout_toRightOf="@id/liabilitynameid"

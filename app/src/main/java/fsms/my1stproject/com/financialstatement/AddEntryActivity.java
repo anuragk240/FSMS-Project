@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 import constants.EntryTypeConst;
+import constants.MiscConst;
 import constants.RegistrationConst;
 import constants.FragmentConst;
 import constants.TableConst;
@@ -44,9 +45,9 @@ public class AddEntryActivity extends AppCompatActivity implements AdapterView.O
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final Bundle fromactivity = getIntent().getExtras();
+        final Bundle fromactivity = getIntent().getBundleExtra(MiscConst.BUNDLE_KEY);
 
-        int currenttab = fromactivity.getInt(RegistrationConst.CURRENT_TAB);
+        int currenttab = fromactivity.getInt(MiscConst.CURRENT_TAB);
         dba = new DatabaseHandler(getApplicationContext());
 
         name = (EditText) findViewById(R.id.getname);
@@ -57,23 +58,48 @@ public class AddEntryActivity extends AppCompatActivity implements AdapterView.O
         spinner = (Spinner) findViewById(R.id.spinnerid);
         save = (Button) findViewById(R.id.save_button);
 
-        final Entry old = new Entry();
+        Entry old = new Entry();
 
+        if(fromactivity.getString(MiscConst.ADD_UPDATE_KEY).equals(MiscConst.UPDATE)){
+            setTitle("Update Entry");
+
+            old = (Entry) fromactivity.getSerializable(MiscConst.ENTRY_KEY);
+            name.setText(old.getNameofentry());
+            values.setText(String.valueOf(old.getValue()));
+            datePicker.updateDate(old.getCalenderDate().get(Calendar.YEAR),
+                    old.getCalenderDate().get(Calendar.MONTH), old.getCalenderDate().get(Calendar.DAY_OF_MONTH));
+            int pos;
+            switch(old.getType()){
+                case EntryTypeConst.REVENUE:
+                case EntryTypeConst.FIXED:
+                case EntryTypeConst.EQUITY:
+                    pos = 0;
+                    break;
+                case EntryTypeConst.EXPENSE:
+                case EntryTypeConst.CURRENT:
+                    pos = 1;
+                    break;
+                case EntryTypeConst.OTHER:
+                default:
+                    pos = 2;
+                    break;
+            }
+            save.setText("UPDATE");
+            spinner.setSelection(pos);
+        }
+
+        final Entry finalOld = old;
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Entry e = new Entry();
                 if(test()){
                     e.setNameofentry(name.getText().toString());
-                    Double l = new Double(values.getText().toString());
-                    e.setValue(l.doubleValue());
-                    Log.d("day ", String.valueOf(datePicker.getDayOfMonth()));
-                    Log.d("month ", String.valueOf(datePicker.getMonth()));
-                    Log.d("year ", String.valueOf(datePicker.getYear()));
+                    e.setValue(Double.valueOf(values.getText().toString()));
                     e.setDate(datePicker.getDayOfMonth(), datePicker.getMonth(), datePicker.getYear());
                     e.setTablename(Table_name);
                     e.setType(type);
-                    if(fromactivity.getString(RegistrationConst.ADD_UPDATE_KEY).equals("Add")){
+                    if(fromactivity.getString(MiscConst.ADD_UPDATE_KEY).equals(MiscConst.ADD)){
                         dba.addEntry(e);
                         if(DatabaseHandler.isinserted == -1){
                             Toast.makeText(getApplicationContext(), "Duplicate Entry Name!", Toast.LENGTH_LONG).show();
@@ -83,7 +109,7 @@ public class AddEntryActivity extends AppCompatActivity implements AdapterView.O
                         }
                     }
                     else {
-                        dba.updateEntry(e, old);
+                        dba.updateEntry(e, finalOld);
                         Toast.makeText(getApplicationContext(), "No. of Entries updated :" +
                                 DatabaseHandler.nrows, Toast.LENGTH_LONG).show();
                     }
@@ -123,45 +149,11 @@ public class AddEntryActivity extends AppCompatActivity implements AdapterView.O
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        Log.d("Launcher Activity ", fromactivity.getString(RegistrationConst.ADD_UPDATE_KEY));
-
-        if(fromactivity.getString(RegistrationConst.ADD_UPDATE_KEY).equals("Update")){
-            setTitle("Update Entry");
-            old.setNameofentry(fromactivity.getString(TableConst.NAME));
-            old.setValue(fromactivity.getDouble(TableConst.VALUE));
-            old.setDate(fromactivity.getLong(TableConst.DATE));
-            old.setTablename(fromactivity.getString("Table Name"));
-            old.setType(fromactivity.getString(TableConst.TYPE));
-            name.setText(old.getNameofentry());
-            values.setText(String.valueOf(old.getValue()));
-            datePicker.updateDate(old.getCalenderDate().get(Calendar.YEAR),
-                    old.getCalenderDate().get(Calendar.MONTH), old.getCalenderDate().get(Calendar.DAY_OF_MONTH));
-            int pos;
-            switch(old.getType()){
-                case EntryTypeConst.REVENUE:
-                case EntryTypeConst.FIXED:
-                case EntryTypeConst.EQUITY:
-                    pos = 0;
-                    break;
-                case EntryTypeConst.EXPENSE:
-                case EntryTypeConst.CURRENT:
-                    pos = 1;
-                    break;
-                case EntryTypeConst.OTHER:
-                default:
-                    pos = 2;
-                    break;
-            }
-            save.setText("UPDATE");
-            spinner.setSelection(pos);
-        }
-
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String temp = parent.getItemAtPosition(position).toString();
-        Log.d("selected spinner item ", temp);
         switch(temp){
             case "Revenue and Gains":
                 type = EntryTypeConst.REVENUE;
