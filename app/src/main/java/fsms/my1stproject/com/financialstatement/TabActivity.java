@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import adapters.TabsPagerAdapter;
 import constants.MiscConst;
-import constants.RegistrationConst;
 import constants.FragmentConst;
 
 public class TabActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener{

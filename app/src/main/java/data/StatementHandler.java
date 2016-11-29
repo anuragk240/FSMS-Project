@@ -2,7 +2,6 @@ package data;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.widget.ListView;
 
 import java.text.SimpleDateFormat;
